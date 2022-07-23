@@ -2,6 +2,7 @@
 using Core.Entities;
 using Core.Helpers;
 using DataAccess.Repositories.Implementations;
+using Manage.Controllers;
 
 namespace Manage
 {
@@ -9,16 +10,23 @@ namespace Manage
     {
         static void Main()
         {
-            GroupRepository _groupRepository = new GroupRepository();
+            GroupController _groupController = new GroupController();
+            StudentController _studentController = new StudentController(); 
+
             ConsoleHelper.WriteTextWithColor(ConsoleColor.Cyan, "Welcome");
             Console.WriteLine("---");
-            while(true)
+            while (true)
             {
                 ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "1- Create Group");
-                ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "2- Uptade Group");
+                ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "2- Update Group");
                 ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "3- Delete Group");
                 ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "4- All Groups");
                 ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "5- Get Group By Name");
+                ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "6- Create Student");
+                ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "7- Update Student");
+                ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "8- Delete Student");
+                ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "9- All Students by Group");
+                ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "10- Get All Students by Group");
                 ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "0- Exit");
                 Console.WriteLine("---");
                 ConsoleHelper.WriteTextWithColor(ConsoleColor.Blue, "Select Option");
@@ -28,57 +36,53 @@ namespace Manage
                 bool result = int.TryParse(number, out selectedNumber);
                 if(result)
                 {
-                  if(selectedNumber >= 0 && selectedNumber <= 5)
+                  if(selectedNumber >= 0 && selectedNumber <= 10)
                     {
                         switch(selectedNumber)
                         {
+                            #region CreateGroup
                             case (int)Options.CreateGroup:
-                                ConsoleHelper.WriteTextWithColor(ConsoleColor.DarkMagenta, "Enter Group Name");
-                                string name = Console.ReadLine();
-                                MaxSize: ConsoleHelper.WriteTextWithColor(ConsoleColor.DarkMagenta, "Enter Group maxSize");
-                                string size = Console.ReadLine();
-                                int maxSize;
-                                result = int .TryParse(size, out maxSize);
-                                if(result)
-                                {
-                                    Group group = new Group
-                                    {
-                                        Name = name,
-                                        MaxSize = maxSize
-                                    };
-                                   var createdGroup = _groupRepository.Create(group);
-                                    ConsoleHelper.WriteTextWithColor(ConsoleColor.Green, $"{createdGroup.Name} is succesfully created with maxSize -{createdGroup.MaxSize}");
-                                }
-                                else
-                                {
-                                    ConsoleHelper.WriteTextWithColor(ConsoleColor.DarkRed, "Please Enter Correct Group maxSize");
-                                    goto MaxSize;
-                                }
+                                _groupController.CreateGroup();
                                 break;
+                            #endregion
                             case (int)Options.UptadeGroup:
+                                _groupController.UpdateGroup();
                                 break;
                             case (int)Options.DeleteGroup:
+                                _groupController.DeleteGroup();
                                 break;
+                            #region AllGroups
                             case (int)Options.AllGroups:
-                                var groups = _groupRepository.GetAll();
-                                ConsoleHelper.WriteTextWithColor(ConsoleColor.Magenta, "All Groups");
-                                foreach (var group in groups)
-                                {
-                                    Console.WriteLine($"{group.Name}, {group.MaxSize}");
-                                }
+                                _groupController.AllGroups();
                                 break;
+                            #endregion
                             case (int)Options.GetGroupByName:
+                                _groupController.GetGroupByName();
                                 break;
                             case (int)Options.Exit:
 
-                                ConsoleHelper.WriteTextWithColor(ConsoleColor.DarkYellow,"Thanks for using our application");
-                                return;
-                        }
-                    }
+                               _groupController.Exit();
+                                break;
+                            case (int)Options.CreateStudent:
+                                _studentController.CreateStudent();
+                                break;
+                            case (int)Options.UptadeStudent:
+                                _studentController.UpdateStudent();
+                                break;
+                                case(int)Options.DeleteStudent:
+                                _studentController.DeleteStudent();
+                                break;
+                            case (int)Options.AllStudentsByGroup:
+                                _studentController.AllStudentsByGroup();
+                                break;
+                            case (int)Options.GetAllStudentsByGroup:
+                                _studentController.GetAllStudentsByGroup();
+                                break;
+                            
 
-                    {
-                        ConsoleHelper.WriteTextWithColor(ConsoleColor.Red, "Please enter correct number");
-                    }
+                               
+                        }
+                    }         
                 }
             }
             

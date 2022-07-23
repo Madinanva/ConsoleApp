@@ -13,6 +13,11 @@ namespace Core.Constants
         UptadeGroup,
         DeleteGroup,
         AllGroups,
-        GetGroupByName
+        GetGroupByName,
+        CreateStudent,
+        UptadeStudent,
+        DeleteStudent,
+        AllStudentsByGroup,
+        GetAllStudentsByGroup
     }
 }

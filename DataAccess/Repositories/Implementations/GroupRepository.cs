@@ -57,7 +57,6 @@ namespace DataAccess.Repositories.Implementations
                 group.Name = entity.Name;
                 group.MaxSize = entity.MaxSize;
             }
-
         }
     }
 }
