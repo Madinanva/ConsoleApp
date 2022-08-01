@@ -9,49 +9,47 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.Implementations
 {
-    public class AdminRepository : IRepository<Admin>
+    public class TeacherRepository : IRepository<Teacher>
     {
         private static int id;
-        public Admin Create(Admin entity)
+        public Teacher Create(Teacher entity)
         {
             id++;
             entity.Id = id;
             try
             {
-                DbContext.Admins.Add(entity);
+                DbContext.Teachers.Add(entity);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Console.WriteLine("Something went wrong");
             }
-
             return entity;
         }
 
-        public void Delete(Admin entity)
+        public void Delete(Teacher entity)
         {
             try
             {
-                DbContext.Admins.Remove(entity);
+                DbContext.Teachers.Remove(entity);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Console.WriteLine("Something went wrong");
             }
-
         }
 
-        public Admin Get(Predicate<Admin> filter = null)
+        public Teacher Get(Predicate<Teacher> filter = null)
         {
             try
             {
                 if (filter == null)
                 {
-                    return DbContext.Admins[0];
+                    return DbContext.Teachers[0];
                 }
                 else
                 {
-                    return DbContext.Admins.Find(filter);
+                    return DbContext.Teachers.Find(filter);
                 }
             }
             catch (Exception)
@@ -59,49 +57,44 @@ namespace DataAccess.Repositories.Implementations
                 Console.WriteLine("Something went wrong");
                 return null;
             }
-
-
         }
 
-        public List<Admin> GetAll(Predicate<Admin> filter = null)
+        public List<Teacher> GetAll(Predicate<Teacher> filter = null)
         {
             try
             {
                 if (filter == null)
                 {
-                    return DbContext.Admins;
+                    return DbContext.Teachers;
                 }
                 else
                 {
-                    return DbContext.Admins.FindAll(filter);
+                    return DbContext.Teachers.FindAll(filter);
                 }
             }
-            catch
+            catch (Exception)
             {
+
                 Console.WriteLine("Something went wrong");
                 return null;
             }
         }
 
-
-        public void Update(Admin entity)
+        public void Update(Teacher entity)
         {
             try
             {
-                var admin = DbContext.Admins.Find(g => g.Id == entity.Id);
-                if (admin != null)
+                var student = DbContext.Teachers.Find(g => g.Id == entity.Id);
+                if (student != null)
                 {
-                    admin.Username = entity.Username;
-                    admin.Password = entity.Password;
+                    student.Name = entity.Name;
+                    student.Surname = entity.Surname;
                 }
-
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Console.WriteLine("Something went wrong");
-
             }
-
         }
     }
 }

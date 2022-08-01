@@ -16,46 +16,84 @@ namespace DataAccess.Repositories.Implementations
         {
             id++;
             entity.Id = id;
-            DbContext.Students.Add(entity);
+            try
+            {
+                DbContext.Students.Add(entity);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Something went wrong");
+            }
             return entity;
         }
 
         public void Delete(Student entity)
         {
-            DbContext.Students.Remove(entity);
+            try
+            {
+                DbContext.Students.Remove(entity);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Something went wrong");
+            }
         }
 
         public Student Get(Predicate<Student> filter = null)
         {
-            if (filter == null)
+            try
             {
-                return DbContext.Students[0];
+                if (filter == null)
+                {
+                    return DbContext.Students[0];
+                }
+                else
+                {
+                    return DbContext.Students.Find(filter);
+                }
             }
-            else
+            catch (Exception)
             {
-                return DbContext.Students.Find(filter);
+                Console.WriteLine("Something went wrong");
+                return null;
             }
         }
 
         public List<Student> GetAll(Predicate<Student> filter = null)
         {
-            if (filter == null)
+            try
             {
-                return DbContext.Students;
+                if (filter == null)
+                {
+                    return DbContext.Students;
+                }
+                else
+                {
+                    return DbContext.Students.FindAll(filter);
+                }
             }
-            else
+            catch (Exception)
             {
-                return DbContext.Students.FindAll(filter);
+
+                Console.WriteLine("Something went wrong");
+                return null;
             }
         }
 
         public void Update(Student entity)
         {
-            var student = DbContext.Students.Find(g => g.Id == entity.Id);
-            if (student != null)
+            try
             {
-                student.Name = entity.Name;
-                student.Surname = entity.Surname;
+                var student = DbContext.Students.Find(g => g.Id == entity.Id);
+                if (student != null)
+                {
+                    student.Name = entity.Name;
+                    student.Surname = entity.Surname;
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Something went wrong");
             }
         }
     }

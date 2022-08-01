@@ -16,46 +16,84 @@ namespace DataAccess.Repositories.Implementations
         {
             id++;
             entity.Id = id;
+            try
+            {
             DbContext.Groups.Add(entity);
+
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Something went wrong");
+            }
             return entity;
         }
 
         public void Delete(Group entity)
         {
-            DbContext.Groups.Remove(entity);
+            try
+            {
+                DbContext.Groups.Remove(entity);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Something went wrong");
+            }
         }
 
         public Group Get(Predicate<Group> filter = null)
         {
-            if (filter == null)
+            try
             {
-                return DbContext.Groups[0];
+                if (filter == null)
+                {
+                    return DbContext.Groups[0];
+                }
+                else
+                {
+                    return DbContext.Groups.Find(filter);
+                }
             }
-            else
+            catch (Exception)
             {
-                return DbContext.Groups.Find(filter);
+                Console.WriteLine("Something went wrong");
+                return null;
             }
         }
 
         public List<Group> GetAll(Predicate<Group> filter = null)
         {
-            if (filter == null)
+            try
             {
-                return DbContext.Groups;
+                if (filter == null)
+                {
+                    return DbContext.Groups;
+                }
+                else
+                {
+                    return DbContext.Groups.FindAll(filter);
+                }
             }
-            else
+            catch (Exception)
             {
-                return DbContext.Groups.FindAll(filter);
+                Console.WriteLine("Something went wrong");
+                return null;
             }
         }
 
         public void Update(Group entity)
         {
-            var group = DbContext.Groups.Find(g => g.Id == entity.Id);
-            if (group != null)
+            try
             {
-                group.Name = entity.Name;
-                group.MaxSize = entity.MaxSize;
+                var group = DbContext.Groups.Find(g => g.Id == entity.Id);
+                if (group != null)
+                {
+                    group.Name = entity.Name;
+                    group.MaxSize = entity.MaxSize;
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Something went wrong");
             }
         }
     }

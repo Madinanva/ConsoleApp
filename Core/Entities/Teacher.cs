@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class Group : IEntity
+    public class Teacher : Person, IEntity
     {
+        public Teacher()
+        {
+            Groups = new List<Group>();
+        }
         public int Id { get; set; }
-        public string Name { get; set; }
-        public int MaxSize { get; set; }
-        public int CurrentSize { get; set; }
-        public Teacher Teacher { get; set; }
-
+        public List<Group> Groups { get; set; }
     }
 }

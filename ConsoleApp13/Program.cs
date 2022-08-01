@@ -13,8 +13,9 @@ namespace Manage
             GroupController _groupController = new GroupController();
             StudentController _studentController = new StudentController();
             AdminController _adminController = new AdminController();
+            TeacherController _teacherController = new TeacherController();
 
-        Authentication: var admin = _adminController.Authenticate();
+         Authentication: var admin = _adminController.Authenticate();
             if (admin != null)
             {
                 ConsoleHelper.WriteTextWithColor(ConsoleColor.Cyan, "Welcome");
@@ -31,7 +32,14 @@ namespace Manage
                     ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "8- Delete Student");
                     ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "9- All Students by Group");
                     ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "10- Get All Students by Group");
+                    ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "11- Create Teacher");
+                    ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "12- Uptade Teacher");
+                    ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "13- Delete Teacher");
+                    ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "14- Get All Teachers by Groups");
+                    ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "15- Get All Groups By Teacher ");
+                    ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "16- Add Group to Teacher ");
                     ConsoleHelper.WriteTextWithColor(ConsoleColor.Yellow, "0- Exit");
+
                     Console.WriteLine("---");
                     ConsoleHelper.WriteTextWithColor(ConsoleColor.Blue, "Select Option");
                     string number = Console.ReadLine();
@@ -40,7 +48,7 @@ namespace Manage
                     bool result = int.TryParse(number, out selectedNumber);
                     if (result)
                     {
-                        if (selectedNumber >= 0 && selectedNumber <= 10)
+                        if (selectedNumber >= 0 && selectedNumber <= 16)
                         {
                             switch (selectedNumber)
                             {
@@ -64,7 +72,6 @@ namespace Manage
                                     _groupController.GetGroupByName();
                                     break;
                                 case (int)Options.Exit:
-
                                     _groupController.Exit();
                                     break;
                                 case (int)Options.CreateStudent:
@@ -81,6 +88,24 @@ namespace Manage
                                     break;
                                 case (int)Options.GetAllStudentsByGroup:
                                     _studentController.GetAllStudentsByGroup();
+                                    break;
+                                case (int)Options.CreateTeacher:
+                                    _teacherController.CreateTeacher();
+                                    break;
+                                    case(int)Options.UptadeTeacher:
+                                    _teacherController.UpdateTeacher();
+                                    break ;
+                                    case (int)Options.DeleteTeacher:
+                                    _teacherController.DeleteTeacher();
+                                    break;
+                                case (int)Options.GetAllTeachersByGroup:
+                                    _teacherController.GetAllTeachersByGroup(); 
+                                    break ;
+                                case (int)Options.GetAllGroupsByTeacher:
+                                    _teacherController.GetAllGroupsByTeacher();
+                                    break;
+                                case (int)Options.AddGroupToTeacher:
+                                    _teacherController.AddGroupToTeacher();
                                     break;
 
                             }
